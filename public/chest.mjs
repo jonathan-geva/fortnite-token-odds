@@ -18,6 +18,8 @@ const watchClip = document.querySelector('#watch-clip');
 const sparks = document.querySelector('#sparks');
 const replay = document.querySelector('#replay');
 const gameplay = document.querySelector('#gameplay');
+const replayLabel = document.querySelector('#replay-label');
+const gameplayLabel = document.querySelector('#gameplay-label');
 const slot = document.querySelector('#video-slot');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const videoId = 'yLUouHjJyLQ';
@@ -136,6 +138,8 @@ function clearVideo() {
 function playAnimation() {
   clearVideo();
   document.querySelector('#reveal-mode').textContent = revealMode;
+  replayLabel.textContent = 'Replay reveal';
+  gameplayLabel.textContent = 'Watch the in-game drop';
   const particles = document.createDocumentFragment();
   for (let i = 0; i < 48; i++) {
     const spark = document.createElement('i');
@@ -172,8 +176,9 @@ skip.addEventListener('click', () => openChests(Infinity, skip));
 reset.addEventListener('click', () => beginRun('New run. The chest is ready.'));
 rate.addEventListener('change', () => beginRun('Rate changed. A new run has started.'));
 function showGameplay() {
-  if (!slot.hidden) return;
   document.querySelector('#reveal-mode').textContent = 'IN-GAME FOOTAGE';
+  replayLabel.textContent = 'Replay in-game clip';
+  gameplayLabel.textContent = 'Play fan reveal';
   const frame = document.createElement('iframe');
   frame.src = `https://www.youtube-nocookie.com/embed/${videoId}?start=${clipStart}&end=470&autoplay=1&rel=0`;
   frame.title = 'Lachlan’s squad finds Pirate Shop Access in Fortnite';
@@ -190,8 +195,14 @@ function showGameplay() {
 
 preview.addEventListener('click', () => showReveal(true, preview));
 watchClip.addEventListener('click', () => showReveal(true, watchClip, true));
-replay.addEventListener('click', playAnimation);
-gameplay.addEventListener('click', showGameplay);
+replay.addEventListener('click', () => {
+  if (slot.hidden) playAnimation();
+  else showGameplay();
+});
+gameplay.addEventListener('click', () => {
+  if (slot.hidden) showGameplay();
+  else playAnimation();
+});
 document.querySelector('#close-reveal').addEventListener('click', () => reveal.close());
 reveal.addEventListener('close', () => {
   clearVideo();
