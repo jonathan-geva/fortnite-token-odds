@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080e17">
+  <meta name="description" content="Make Fortnite’s 1-in-137,500 Pirate Shop Access odds tangible. Find the gold cell, open chests at the real odds, and replay the reveal.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="One in 137,500 • Fortnite Pirate Token Odds">
+  <meta property="og:description" content="Find one gold cell in a sea of 137,500. Then try opening chests at the real odds.">
+  <meta property="og:url" content="https://fortnite-token-odds.pages.dev/">
+  <meta property="og:image" content="https://fortnite-token-odds.pages.dev/assets/share.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="One in 137,500, with a gold compass coin over a midnight harbor">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="One in 137,500 • Fortnite Pirate Token Odds">
+  <meta name="twitter:description" content="Find one gold cell in a sea of 137,500. Then try opening chests at the real odds.">
+  <meta name="twitter:image" content="https://fortnite-token-odds.pages.dev/assets/share.jpg">
+  <meta name="twitter:image:alt" content="One in 137,500, with a gold compass coin over a midnight harbor">
+  <link rel="canonical" href="https://fortnite-token-odds.pages.dev/">
+  <link rel="icon" href="assets/compass.png">
+  <link rel="preload" href="assets/display.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <title>Fortnite Pirate Token Odds • One in 137,500</title>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead" id="top">
+    <div class="wrap masthead-inner">
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">✦</span> TOKEN<span>ODDS</span></a>
+      <nav aria-label="Main">
+        <a href="#scale">The scale</a>
+        <a href="#simulator">Chest lab</a>
+        <a href="#calculator">Calculator</a>
+      </nav>
+      <button class="button small outline share" type="button" data-share hidden>Share <span aria-hidden="true">↗</span></button>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <picture class="hero-art">
+        <source media="(max-width: 680px)" srcset="assets/harbor-mobile.webp">
+        <img src="assets/harbor.webp" width="1536" height="1024" alt="" fetchpriority="high">
+      </picture>
+      <div class="wrap hero-inner">
+        <p class="eyebrow"><span aria-hidden="true">✦</span> FORTNITE / TREASURE HUNTERS</p>
+        <h1 id="hero-title"><span>ONE IN</span><strong>137,500</strong></h1>
+        <p class="hero-copy">The odds of finding Pirate Shop Access in a single eligible Fortnite chest. Try finding one gold cell in that many outcomes.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#scale">See the odds <span aria-hidden="true">↓</span></a>
+          <a class="button outline" href="#simulator">Open a chest <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="wrap hero-credit"><a href="#sources">Epic’s published base rate <span aria-hidden="true">↗</span></a></div>
+    </section>
+
+    <section class="stat-strip" aria-label="Pirate Shop Access at base odds">
+      <div class="wrap stat-inner">
+        <div><strong>0.000727%</strong><span>Chance in one eligible chest</span></div>
+        <div><strong>0.725%</strong><span>Chance in 1,000 chests</span></div>
+        <div><strong>36.79%</strong><span>Chance of zero tokens after 137,500 chests</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="scale">
+      <div class="section-heading">
+        <h2>Find the <em>gold cell.</em></h2>
+        <p>Every cell represents one equally likely outcome in a normal match. Exactly one holds the token.</p>
+      </div>
+      <div class="field-card panel">
+        <div class="field-main">
+          <div class="panel-bar">
+            <span><i class="signal"></i> OUTCOME FIELD</span>
+            <span id="field-dimensions">550 × 250 CELLS</span>
+          </div>
+          <canvas id="field" width="1100" height="500" role="img" aria-label="A 550 by 250 field of equally likely outcomes. Use the zoom controls to find the one gold cell."></canvas>
+          <div class="field-key"><span><i></i> No token</span><span><i class="gold"></i> Pirate token</span><span><i class="locator-key"></i> Next zoom area</span></div>
+        </div>
+        <div class="field-sidebar">
+          <p class="label" id="field-step">FULL FIELD</p>
+          <div class="field-number" id="field-count">137,500</div>
+          <p id="field-note" aria-live="polite">The outlined area contains the winner. Zoom in three times to see it at full size.</p>
+          <div class="field-controls">
+            <button class="button primary" type="button" id="zoom-in">Zoom in <span aria-hidden="true">＋</span></button>
+            <div>
+              <button class="button outline small" type="button" id="zoom-out" disabled>Back</button>
+              <button class="button outline small" type="button" id="shuffle">Shuffle <span aria-hidden="true">↻</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scale-fact"><span class="section-symbol" aria-hidden="true">◷</span><p>At <strong>one chest every second</strong>, 137,500 chests take <strong>38 hours, 11 minutes and 40 seconds</strong> to open. You’d still have a <strong>36.79% chance</strong> of never seeing the token in that run.</p></div>
+    </section>
+
+    <section class="lab" id="simulator">
+      <div class="wrap section">
+        <div class="section-heading">
+          <h2>The <em>chest lab.</em></h2>
+          <p>Open one slowly, roll a thousand at once, or fast-forward to see which chest finally hits. Every run uses Epic’s published odds.</p>
+        </div>
+        <div class="lab-grid">
+          <div class="panel chest-stage" id="chest-stage" data-state="ready">
+            <div class="scene" aria-hidden="true">
+              <img class="chest-art" src="assets/chest-closed.webp" alt="" width="768" height="880" loading="lazy">
+              <img class="chest-art chest-open" src="assets/chest-open.webp" alt="" width="768" height="880" loading="lazy">
+            </div>
+            <div class="chest-light"></div>
+            <div class="stage-header"><span class="label"><i class="signal"></i> CHEST SIMULATOR</span><button class="button small glass" type="button" id="sound" aria-pressed="false">Sound off</button></div>
+            <div class="stage-controls">
+              <button class="button primary open-button" type="button" id="open-one"><span class="open-progress"></span><span id="open-label">Open chest</span><span aria-hidden="true">↗</span></button>
+              <p id="sim-status" role="status">The chest is ready.</p>
+            </div>
+          </div>
+          <div class="panel sim-panel">
+            <div class="sim-top">
+              <label for="sim-rate" class="label">DROP RATE</label>
+              <select id="sim-rate">
+                <option value="1">Normal · 1×</option>
+                <option value="1.5">Treasure Hour · 1.5×</option>
+                <option value="2">Special boost · 2×</option>
+              </select>
+              <p class="quiet" id="sim-rate-note">1 in 137,500 per eligible chest</p>
+            </div>
+            <div class="sim-tally"><div class="label">CHESTS OPENED</div><output id="sim-count">0</output></div>
+            <div class="sim-meter">
+              <div><span>Chance by this chest count</span><strong id="sim-chance">0%</strong></div>
+              <meter id="sim-meter" min="0" max="1" value="0" aria-label="Modeled chance by chest count"></meter>
+            </div>
+            <div class="sim-buttons">
+              <button class="button outline small" id="open-batch" type="button">Roll 1,000</button>
+              <button class="button outline small" id="open-until" type="button">Skip to first drop <span aria-hidden="true">»</span></button>
+            </div>
+            <button class="text-button" id="sim-reset" type="button">↻ Reset run</button>
+          </div>
+        </div>
+        <div class="panel preview-row">
+          <div class="preview-icon" aria-hidden="true">✦</div>
+          <div><h3>Just here for the gold?</h3><p>Trigger the token reveal on demand. Your chest count stays the same.</p></div>
+          <div class="preview-actions">
+            <button class="button primary" type="button" id="preview">Play guaranteed reveal <span aria-hidden="true">▶</span></button>
+            <button class="text-button" type="button" id="watch-clip">Watch the in-game drop <span aria-hidden="true">↗</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="calculator">
+      <div class="section-heading">
+        <h2>How lucky <em>are you?</em></h2>
+        <p>Enter a chest count or a few hours of hunting. The calculator uses independent chest rolls at one fixed rate.</p>
+      </div>
+      <div class="calculator-grid">
+        <div class="panel calc-controls">
+          <fieldset class="rate-switch">
+            <legend class="label">DROP RATE</legend>
+            <label title="Normal match odds"><input type="radio" name="rate" value="1" checked><span>1× Normal</span></label>
+            <label title="Published Treasure Hour multiplier"><input type="radio" name="rate" value="1.5"><span>1.5× Treasure</span></label>
+            <label title="Example of a special boost"><input type="radio" name="rate" value="2"><span>2× Special</span></label>
+          </fieldset>
+          <p class="quiet" id="calc-rate-note">1 in 137,500 per eligible chest</p>
+          <div class="count-entry"><label class="label" for="count">CHESTS OPENED</label><input type="number" id="count" min="0" max="10000000" value="1000" inputmode="numeric"></div>
+          <input type="range" id="count-range" min="0" max="1000" value="429" aria-label="Chest count on a logarithmic scale" aria-valuetext="1,000 chests">
+          <div class="presets" aria-label="Chest count presets">
+            <button type="button" data-count="1000">1,000</button>
+            <button type="button" data-count="10000">10,000</button>
+            <button type="button" data-count="137500">137,500</button>
+          </div>
+          <div class="playtime" id="reality">
+            <label for="hours">Hours <input type="number" id="hours" min="0" max="10000" step="any" value="3" inputmode="decimal"></label>
+            <label for="pace">Chests / hour <input type="number" id="pace" min="0" max="1000" value="50" inputmode="numeric"></label>
+            <button class="button small outline" type="button" id="use-pace">Use playtime</button>
+          </div>
+          <p class="quiet" id="hours-summary">3 hours × 50 per hour ≈ 150 chests.</p>
+        </div>
+        <div class="panel calc-result">
+          <div class="result-heading" aria-live="polite" aria-atomic="true">
+            <div><p class="label">AT LEAST ONE TOKEN</p><output id="calc-chance" for="count">0.725%</output></div>
+            <div class="miss"><p class="label">ZERO TOKENS</p><output id="calc-miss" for="count">99.275%</output></div>
+          </div>
+          <canvas id="chart" width="720" height="258" role="img" aria-label="A probability curve for getting at least one token as the chest count rises."></canvas>
+          <p id="chart-legend" class="quiet" hidden><span aria-hidden="true">┄</span> Normal odds <span aria-hidden="true">━</span> Selected odds</p>
+          <div class="milestones"><div><span>50% CHANCE</span><strong id="milestone-50">95,308</strong></div><div><span>90% CHANCE</span><strong id="milestone-90">316,605</strong></div><div><span>99% CHANCE</span><strong id="milestone-99">633,209</strong></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap methodology" id="sources" aria-labelledby="sources-title">
+      <h2 id="sources-title">How the odds work</h2>
+      <details><summary>Does the next chest get luckier?</summary><p>Under the independent-roll model, every eligible chest has the same chance at a given rate. The chance of finding at least one after <em>n</em> chests is <code>1 − (1 − p)<sup>n</sup></code>, where <em>p</em> is the per-chest probability. At normal odds that’s 63.21% after 137,500 chests.</p></details>
+      <details><summary>Where do the drop rates come from?</summary><p>Epic lists 1 in 137,500 for Pirate Shop Access in a normal match and a 1.5× boost during Treasure Hours. Fortnite Status gave a 2× boost for a specific November 7 window as an example. Check Epic’s announcements for the multiplier in a specific session. <a href="https://www.epicgames.com/help/c-34254770/c-33726977/what-are-the-drop-rates-of-treasure-in-chests-in-fortnite-battle-royale-s-pirate-treasure-event-a14361627">Epic Games Support ↗</a> · <a href="https://x.com/FortniteStatus/status/2119202610322227327">Fortnite Status ↗</a></p></details>
+      <details><summary>What does the simulator count?</summary><p>Each run samples the wait until the first Pirate Shop Access drop. Batch rolls stop at the first success inside the batch. Changing the drop rate starts a fresh run. Other loot is outside this simulation.</p></details>
+    </section>
+    <noscript><p class="wrap noscript">Enable JavaScript to use the chart, the chest simulator and the calculator.</p></noscript>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-inner"><div><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">✦</span> TOKEN<span>ODDS</span></a><p>Portions of the materials used are trademarks and/or copyrighted works of Epic Games, Inc. All rights reserved by Epic. This material is not official and is not endorsed by Epic.</p></div><div class="footer-links"><a href="https://github.com/jonathan-geva/fortnite-token-odds">GitHub ↗</a><a href="https://legal.epicgames.com/epicgames/fan-art-policy">Fan Content Policy ↗</a><a href="https://www.youtube.com/watch?v=yLUouHjJyLQ&t=442s">Gameplay by Lachlan ↗</a></div></div>
+  </footer>
+  <dialog id="reveal" class="reveal" aria-label="Pirate Shop Access reveal">
+    <div class="reveal-actions"><p id="reveal-mode" class="label">GUARANTEED PREVIEW</p><button type="button" id="close-reveal" class="button small glass" aria-label="Close reveal">✕</button></div>
+    <div class="reveal-art" aria-hidden="true"><div class="reveal-ring"></div><div id="sparks"></div><div class="token"></div></div>
+    <div class="reveal-text"><p class="eyebrow">✦ TOKEN REVEAL ✦</p><h2 id="reveal-title">Pirate Shop Access</h2><p id="reveal-note">Guaranteed preview. No real in-game item is awarded.</p></div>
+    <div id="video-slot" hidden></div>
+    <div class="reveal-buttons"><button class="button primary small" id="replay" type="button">Replay <span aria-hidden="true">↻</span></button><button class="button outline small" id="gameplay" type="button">Watch the real drop <span aria-hidden="true">▶</span></button></div>
+  </dialog>
+  <p class="toast" id="toast" role="status" hidden></p>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
