@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2213%22%20fill%3D%22%230b1014%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2223%22%20fill%3D%22%23edc976%22%20stroke%3D%22%23866135%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22m32%2013%206%2013%2013%206-13%206-6%2013-6-13-13-6%2013-6z%22%20fill%3D%22%23554020%22%2F%3E%3C%2Fsvg%3E">
+  <meta name="theme-color" content="#080b0e">
+  <meta name="description" content="One token. 137,500 chests. A visual, interactive experiment showing the almost impossible odds of Fortnite's Pirate Shop Access token.">
+  <title>Fortnite Token Odds — How Rare Is the Pirate Token?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#080b0e; --panel:#11171b; --panel2:#161d22; --panel3:#0d1216; --ink:#f3f0e7; --muted:#909a9b; --faint:#616e72; --border:rgba(227,237,229,.105); --gold:#edc976; --gold2:#b7863d; --mint:#a6e8bd; --red:#f58b81; --mono:'DM Mono', 'Cascadia Code',monospace; --sans:'Space Grotesk',Inter,Arial,sans-serif; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); overflow-x:hidden; }
+    ::selection { background:#d7aa59; color:#131110; }
+    a { color:inherit; }
+    button, input { font:inherit; }
+    button { cursor:pointer; }
+    button:disabled { cursor:not-allowed; opacity:.55; }
+    :focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
+    .container { width:min(1320px,calc(100% - 80px)); margin-inline:auto; }
+    .mono { font-family:var(--mono); }
+    .eyebrow { display:flex; align-items:center; gap:10px; color:var(--gold); text-transform:uppercase; font:500 10px var(--mono); letter-spacing:.18em; }
+    .eyebrow .dot { width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 12px #edc97678; flex:0 0 auto; }
+    .grain { position:fixed; inset:0; z-index:20; pointer-events:none; opacity:.065; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"); }
+    .topbar { height:82px; border-bottom:1px solid var(--border); position:relative; z-index:5; }
+    .topbar .container { display:flex; align-items:center; justify-content:space-between; height:100%; gap:24px; }
+    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; white-space:nowrap; }
+    .brand-symbol { color:var(--gold); width:34px; height:34px; border:1px solid #aa874d66; border-radius:9px; display:grid; place-items:center; font-size:21px; transform:rotate(-8deg); }
+    .brand-name { font-size:20px; letter-spacing:-.07em; font-weight:700; }
+    .brand-name em { font-style:normal; color:var(--gold); }
+    .navlinks { display:flex; align-items:center; gap:30px; }
+    .navlinks a { text-decoration:none; font:11px var(--mono); color:#9da7a5; transition:color .2s; }
+    .navlinks a:hover { color:var(--gold); }
+    .header-pill { border:1px solid #c49c5729; border-radius:99px; padding:10px 13px; background:#b7863d0c; font:10px var(--mono); color:#d3b67d; display:flex; align-items:center; gap:8px; white-space:nowrap; }
+    .header-pill i { width:6px;height:6px;background:var(--mint);border-radius:100%;box-shadow:0 0 9px var(--mint); }
+    .hero { position:relative; min-height:750px; overflow:hidden; border-bottom:1px solid var(--border); }
+    .hero:before { content:''; position:absolute; right:-12%; top:-24%; width:900px; height:900px; background:radial-gradient(circle,rgba(204,147,67,.12),transparent 59%); pointer-events:none; }
+    .hero:after { content:''; position:absolute; top:0;left:0;right:0;bottom:0; background-image:linear-gradient(#d5caab06 1px,transparent 1px),linear-gradient(90deg,#d5caab06 1px,transparent 1px); background-size:66px 66px; mask-image:linear-gradient(to bottom,transparent,#000 50%,transparent);pointer-events:none; }
+    .hero-grid { display:grid; grid-template-columns:1.08fr .92fr; align-items:center; min-height:660px; padding-top:38px; position:relative; z-index:1; gap:28px; }
+    .hero-copy { position:relative; padding-top:30px; }
+    .hero h1 { font-size:clamp(75px,7.35vw,117px); letter-spacing:-.092em; font-weight:700; line-height:.98; margin:28px 0 26px; max-width:780px; }
+    .hero h1 .gradient { background:linear-gradient(130deg,#fff2c8 0%,#e2b66a 43%,#93704a 94%); background-clip:text; -webkit-background-clip:text; color:transparent; white-space:nowrap; }
+    .hero-copy>p { color:#aeb7b5; line-height:1.7; font-size:16px; max-width:430px; margin:0 0 33px; }
+    .hero-actions { display:flex;gap:10px; flex-wrap:wrap; }
+    .btn { display:inline-flex;align-items:center;justify-content:center;gap:11px;border:1px solid transparent;border-radius:9px;padding:15px 19px; font-weight:600;font-size:13px;letter-spacing:-.02em;text-decoration:none;transition:transform .2s,background .2s,border-color .2s,color .2s; }
+    .btn:hover:not(:disabled) { transform:translateY(-2px); }
+    .btn-gold { background:var(--gold); color:#19150c; box-shadow:0 8px 34px #e4b36c20; }
+    .btn-gold:hover { background:#f6d892; }
+    .btn-ghost { background:#ffffff05;color:#d2d7d2;border-color:#ffffff23; }
+    .btn-ghost:hover { background:#ffffff10;border-color:#ffffff46; }
+    .hero-art { width:100%; height:575px; position:relative; display:grid;place-items:center;isolation:isolate; }
+    .hero-art .art-aura { position:absolute; width:440px;height:440px; border-radius:50%; background:radial-gradient(circle,#b8883533 0%,#d4a2580d 40%,transparent 68%); filter:blur(12px); }
+    .orbit { position:absolute;width:440px;height:440px;border-radius:50%;border:1px solid #d4ab6524;transform:rotateX(65deg) rotateZ(-14deg); }
+    .orbit.o2 { width:550px;height:550px;border-color:#d4ab6513;transform:rotateX(75deg) rotateZ(28deg); }
+    .coin-wrap { position:relative; filter:drop-shadow(0 25px 50px #0009) drop-shadow(0 0 42px #b48c3f30); animation:float 7s ease-in-out infinite; }
+    .coin-svg { width:min(390px,34vw); height:auto; display:block; }
+    .art-note { position:absolute; z-index:3; border:1px solid #d4bb8140;background:#101519db;backdrop-filter:blur(18px);border-radius:10px; padding:14px 17px;display:flex;flex-direction:column;gap:5px;box-shadow:0 10px 40px #0004; }
+    .art-note small { color:#98a6a3; font:10px var(--mono);letter-spacing:.06em; }
+    .art-note strong { color:var(--gold);font:500 21px var(--mono);letter-spacing:-.05em; }
+    .art-note.note-a { top:102px;right:0;transform:rotate(5deg); }
+    .art-note.note-b { left:12px;bottom:85px;transform:rotate(-5deg); }
+    .art-note.note-b strong { color:var(--ink); }
+    .spark { position:absolute;background:#e6bf74;border-radius:2px;box-shadow:0 0 12px #d2b06a;transform:rotate(45deg);animation:twinkle 3s ease-in-out infinite; }
+    .hero-bottom { position:relative;z-index:2;display:flex; justify-content:space-between;align-items:center; padding:22px 0;border-top:1px solid #ffffff14;gap:16px; }
+    .hero-bottom p { margin:0;color:#8c9795;font:10px var(--mono);letter-spacing:.07em; }
+    .hero-bottom b { color:#d8c6a4;font-weight:500; }
+    .scroll-prompt { display:flex;align-items:center;gap:10px;color:#c3c6ba;font:10px var(--mono);white-space:nowrap;text-decoration:none; }
+    .scroll-prompt span { width:29px;height:29px;border:1px solid #ffffff30;border-radius:50%;display:grid;place-items:center;font-size:15px; }
+    .stat-strip { display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border); }
+    .stat-strip>div { padding:38px 5px 40px; border-right:1px solid var(--border); }
+    .stat-strip>div:first-child { padding-left:0; }
+    .stat-strip>div:last-child { border-right:0;padding-left:30px; }
+    .stat-strip>div:nth-child(2) { padding-left:30px; }
+    .stat-kicker { font:10px var(--mono);color:var(--faint);letter-spacing:.13em;text-transform:uppercase; }
+    .stat-val { font-size:clamp(28px,3vw,42px);font-weight:600;letter-spacing:-.075em;margin:13px 0 3px; }
+    .stat-val.gold { color:var(--gold); }
+    .stat-val.red { color:var(--red); }
+    .stat-strip p { margin:0;color:var(--muted);font-size:12px; }
+    .section { padding:120px 0 0; scroll-margin-top:30px; }
+    .section-heading { display:flex;align-items:end;justify-content:space-between;gap:35px;margin-bottom:40px; }
+    .section h2 { font-size:clamp(42px,5.2vw,75px);letter-spacing:-.078em;line-height:1.04;margin:17px 0 0;font-weight:600; }
+    .section h2 span { color:var(--gold); }
+    .section-desc { max-width:300px;color:#96a3a1;font-size:14px;line-height:1.75;margin:0 0 3px; }
+    .pixel-card { position:relative;background:#0f1519; border:1px solid #ffffff1b;border-radius:15px;overflow:hidden;padding:22px; }
+    .pixel-card-top { display:flex;justify-content:space-between;align-items:center;gap:18px;padding:2px 1px 20px;flex-wrap:wrap; }
+    .pixel-legend { display:flex;gap:20px;flex-wrap:wrap; }
+    .pixel-legend span { display:flex;align-items:center;gap:9px;color:#a0adaa;font:10px var(--mono); }
+    .legend-square { display:inline-block;height:10px;width:10px;background:#344248;border-radius:1px; }
+    .legend-square.win { background:var(--gold);box-shadow:0 0 9px var(--gold2); }
+    .pixel-actions { display:flex;gap:6px; }
+    .tiny-btn { background:#ffffff08;color:#cbd5d0;border:1px solid #ffffff21;border-radius:7px;font:10px var(--mono);padding:10px 13px;transition:.2s; }
+    .tiny-btn:hover { background:#ffffff16;color:white; }
+    .tiny-btn.active { border-color:#d8b8788a;color:var(--gold);background:#d8b87811; }
+    .pixel-stage { position:relative;background:#101a1d;border-radius:6px;overflow:hidden; min-height:170px; }
+    .pixel-stage canvas { display:block;width:100%;height:auto;aspect-ratio:550/250;image-rendering:pixelated; }
+    .pixel-target { position:absolute; width:32px;height:32px;border:1px solid var(--gold);border-radius:50%; box-shadow:0 0 0 10px #deb86c12,0 0 35px #deb86c77;transform:translate(-50%,-50%);pointer-events:none;opacity:0;transition:opacity .3s; }
+    .pixel-target.visible { opacity:1; }
+    .pixel-target:after { content:'';position:absolute;inset:11px;border-radius:100%;background:var(--gold);box-shadow:0 0 15px 5px var(--gold); }
+    .pixel-card-bottom { display:flex; align-items:center; justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:17px; }
+    .pixel-card-bottom p { margin:0;color:#8a9795;font:10px var(--mono);line-height:1.6; }
+    .pixel-card-bottom strong { color:var(--ink);font-weight:500; }
+    .zoom-preview { display:flex;align-items:center;gap:13px; }
+    #zoomCanvas {width:64px;height:64px;border-radius:5px;border:1px solid #cfad795c;image-rendering:pixelated;background:#223138;}
+    .zoom-preview span { display:block;font:10px var(--mono);color:#9da7a1;line-height:1.65; }
+    .zoom-preview b { color:var(--gold);font-weight:500; }
+    .annotation { padding-top:15px;color:#657273;font:10px var(--mono);letter-spacing:.015em;line-height:1.5; }
+    .calculator-grid { display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:stretch; }
+    .card {background:linear-gradient(148deg,#151b1f 0%,#10161a 100%);border:1px solid var(--border);border-radius:15px;overflow:hidden;}
+    .calc-card { padding:35px; }
+    .card-kicker { font:10px var(--mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase; }
+    .segmented {display:flex;background:#090e11;border:1px solid #ffffff20;padding:4px;gap:3px;border-radius:10px;margin:24px 0 32px;}
+    .segmented button {border:0;background:transparent;color:#879491;border-radius:7px;flex:1;padding:12px 8px;font:10px var(--mono);transition:background .2s,color .2s;}
+    .segmented button.selected {background:#2a2f2a;color:#f2dbab;box-shadow:inset 0 0 0 1px #e6c58032;}
+    .segmented button:hover:not(.selected) {color:#e0e7e1;}
+    .big-prob { font-size:clamp(48px,5.6vw,85px);font-weight:700;letter-spacing:-.09em;line-height:1.03;margin:11px 0 7px;color:var(--gold);font-variant-numeric:tabular-nums; }
+    .prob-label {font-size:13px;color:#a2ada9;line-height:1.6;}
+    .prob-label b { color:#e8ece2;font-weight:500; }
+    .meter {height:7px;border-radius:10px;background:#354047;margin:25px 0 12px;overflow:hidden;}
+    .meter>div {height:100%;width:0;background:linear-gradient(90deg,#ae813f,#f3db9d);border-radius:10px;transition:width .4s ease;}
+    .meter-caption {display:flex;justify-content:space-between;color:#70807f;font:10px var(--mono);gap:8px;}
+    .meter-caption em {font-style:normal;color:#a9b8ac;}
+    .slider-block { margin:37px 0 20px; }
+    .slider-head {display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:17px;}
+    .slider-head label {color:#9aa7a1;font:10px var(--mono);text-transform:uppercase;}
+    .slider-head strong {font:500 23px var(--mono);color:#f4f0e3;letter-spacing:-.055em;}
+    input[type=range] { width:100%;accent-color:var(--gold);cursor:pointer; }
+    .range {appearance:none;height:4px;outline:0;border-radius:20px;background:linear-gradient(to right,var(--gold) 0,var(--gold) var(--progress,10%),#455050 var(--progress,10%),#455050 100%);margin:2px 0 0;}
+    .range::-webkit-slider-thumb {appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);border:4px solid #1a2021;box-shadow:0 0 0 2px var(--gold);}
+    .range::-moz-range-thumb {width:10px;height:10px;border-radius:50%;background:var(--gold);border:4px solid #1a2021;box-shadow:0 0 0 2px var(--gold);}
+    .presets { display:flex;gap:7px;flex-wrap:wrap;margin-top:16px; }
+    .preset {padding:8px 10px;background:#ffffff08;border:1px solid #ffffff14;color:#aeb9b5;border-radius:6px;font:10px var(--mono);transition:.2s;}
+    .preset:hover {color:var(--ink);border-color:#cda96c8c;}
+    .calc-foot {border-top:1px solid var(--border);padding-top:22px;margin-top:31px;display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .calc-foot span {font:10px var(--mono);color:#778583;display:block;margin-bottom:8px;}
+    .calc-foot strong {font:500 23px var(--mono);color:#d5dbd4;letter-spacing:-.055em;}
+    .chart-card {padding:35px 28px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;}
+    .chart-top {display:flex;justify-content:space-between;align-items:flex-start;gap:15px;padding:0 8px;}
+    .chart-top h3 {font-size:24px;letter-spacing:-.05em;margin:11px 0 0;font-weight:500;}
+    .chart-legend {font:10px var(--mono);color:#879593;display:flex;gap:13px;flex-wrap:wrap;}
+    .chart-legend span {white-space:nowrap;display:flex;align-items:center;gap:6px;}
+    .chart-legend i {width:16px;height:2px;background:#e7c57a;display:inline-block;}
+    .chart-legend .muted-line {background:#697b80;}
+    .chart-area { margin-top:20px;position:relative; }
+    .chart-area svg {width:100%;display:block;overflow:visible;}
+    .chart-grid {stroke:#dce8df13;stroke-width:1;}
+    .chart-axis {fill:#70807c;font:11px var(--mono);}
+    .chart-tip {margin:0 8px;border-top:1px solid var(--border);padding-top:20px;display:flex;gap:11px;color:#9faaa3;font-size:12px;line-height:1.65;}
+    .chart-tip .tip-star {color:var(--gold);font-size:19px;line-height:1;}
+    .sim-grid {display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .sim-visual {min-height:515px;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at 50% 48%,#22312c 0%,#141c1d 45%,#101618 100%);overflow:hidden;}
+    .sim-visual::before {content:'';position:absolute;inset:0;background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px);background-size:40px 40px;opacity:.3;}
+    .sim-visual:after {content:'';position:absolute;width:430px;height:220px;bottom:46px;background:radial-gradient(ellipse,#cb97552a,transparent 68%);filter:blur(20px);}
+    .sim-visual .sim-top {position:absolute;top:29px;left:31px;z-index:2;}
+    .chest {position:relative;width:min(320px,76%);z-index:1;filter:drop-shadow(0 40px 25px #000a);transform-origin:bottom center;transition:transform .4s,filter .4s;}
+    .chest-svg {display:block;width:100%;height:auto;overflow:visible;}
+    .chest.hop {animation:chest-hop .5s ease-in-out;}
+    .chest.won {filter:drop-shadow(0 15px 90px #ecc36ab8);animation:chest-win .65s ease-in-out;}
+    .sim-under {z-index:2;position:absolute;bottom:33px;text-align:center;}
+    .sim-under span {display:block;color:#81918c;font:10px var(--mono);letter-spacing:.14em;margin-bottom:9px;}
+    .sim-under strong {font:500 15px var(--mono);color:#f0d39b;}
+    .sim-controls {padding:32px;display:flex;flex-direction:column;}
+    .sim-controls h3 {font-size:29px;letter-spacing:-.06em;margin:12px 0 9px;}
+    .sim-controls>p {font-size:13px;line-height:1.65;color:#95a29d;margin:0 0 26px;}
+    .sim-number {font-size:clamp(48px,5.2vw,75px);font-weight:700;letter-spacing:-.085em;line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums;}
+    .sim-caption {color:#879592;font:10px var(--mono);letter-spacing:.08em;margin:10px 0 20px;}
+    .sim-tiles {display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:25px;}
+    .sim-tile {background:#070b0d88;border:1px solid #ffffff12;border-radius:9px;padding:17px;}
+    .sim-tile small {display:block;font:10px var(--mono);color:#7f8e8a;margin-bottom:9px;}
+    .sim-tile strong {font:500 22px var(--mono);letter-spacing:-.05em;}
+    .batch-actions {display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:auto;}
+    .batch-actions button {border:1px solid #b58f57aa;background:#e6c37e10;color:#edd3a0;border-radius:8px;padding:14px 6px;font:500 11px var(--mono);transition:.2s;}
+    .batch-actions button:hover:not(:disabled) {background:#efcc837e;color:#1c170d;}
+    .sim-status {margin-top:17px;min-height:32px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#a1ada7;font:10px var(--mono);}
+    .sim-status #simMessage {max-width:360px;line-height:1.6;}
+    .reset {background:none;border:0;color:#a7b3ad;font:10px var(--mono);text-decoration:underline;text-underline-offset:3px;padding:6px 0;white-space:nowrap;}
+    .reset:hover {color:var(--gold);}
+    .reality-grid {display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .reality-card {padding:39px;}
+    .reality-card h3 {margin:12px 0 12px;font-size:33px;letter-spacing:-.06em;line-height:1.13;}
+    .reality-card p {color:#9baba3;font-size:13px;line-height:1.8;}
+    .hours-slider {margin-top:30px;}
+    .hours-slider .range {width:100%;}
+    .playtime-box {position:relative;overflow:hidden;background:radial-gradient(circle at 70% 18%,#6e2f2a33,transparent 65%),#161718;border:1px solid #f0a09d25;border-radius:15px;padding:38px;display:flex;flex-direction:column;justify-content:space-between;}
+    .playtime-box .massive {font-size:clamp(56px,7vw,110px);letter-spacing:-.1em;font-weight:700;line-height:1;margin-top:45px;color:#f2afa6;font-variant-numeric:tabular-nums;}
+    .playtime-box .massive-label {font:11px var(--mono);color:#d2b0aa;text-transform:uppercase;letter-spacing:.09em;margin-top:12px;}
+    .playtime-box .micro-bar {height:12px;border-radius:20px;background:#9e42402a;overflow:hidden;margin:30px 0 15px;border:1px solid #ff8d8d27;}
+    .playtime-box .micro-bar div {height:100%;width:0;background:#dfb969;box-shadow:0 0 8px #edc37b66;transition:width .3s;min-width:1px;}
+    .playtime-box .bottom-line {font:11px var(--mono);color:#9faaa6;line-height:1.8;}
+    .playtime-box .bottom-line b {color:#eee2c9;font-weight:500;}
+    .math-section {padding:120px 0 80px;}
+    .math-card {border-top:1px solid var(--border);padding-top:35px;display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:40px;}
+    .math-card h3 {font-size:24px;letter-spacing:-.06em;margin:12px 0;}
+    .math-formula {color:#e9d1a4;font:clamp(14px,2vw,24px) var(--mono);letter-spacing:-.05em;white-space:nowrap;margin:22px 0 0;}
+    .math-card p {font-size:12px;color:#91a09a;line-height:1.8;margin:5px 0;}
+    footer {border-top:1px solid var(--border);padding:30px 0 40px;}
+    footer .container {display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;}
+    footer p {color:#687774;font:10px var(--mono);line-height:1.7;margin:0;}
+    footer a {color:#c0ae88;text-underline-offset:4px;}
+    .gold-flash {position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle,#f6d69370,transparent 60%);opacity:0;transition:opacity .4s;}
+    .gold-flash.visible {opacity:1;}
+    .confetti {position:absolute;inset:0;pointer-events:none;z-index:4;overflow:hidden;}
+    .confetti i {position:absolute;top:-10px;width:7px;height:12px;background:var(--gold);animation:fall 2s ease-in forwards;}
+    @keyframes fall {to {transform:translate(var(--dx),600px) rotate(var(--rot));opacity:0;}}
+    @keyframes float {0%,100% {transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-16px) rotate(1deg);}}
+    @keyframes twinkle {0%,100% {opacity:.2;transform:rotate(45deg) scale(.6);}50%{opacity:1;transform:rotate(45deg) scale(1.1);}}
+    @keyframes chest-hop {0%,100%{transform:translateY(0) scale(1)}40%{transform:translateY(-20px) scale(1.04)}70%{transform:translateY(0) scale(.97)}}
+    @keyframes chest-win {0%{transform:scale(1)}40%{transform:scale(1.13) rotate(-3deg)}80%{transform:scale(1.07) rotate(2deg)}100%{transform:scale(1.08)}}
+    @media (max-width:1080px) { .navlinks {gap:17px;} .hero h1{font-size:clamp(65px,8vw,94px);} .hero-art{height:510px;} .coin-svg{width:min(350px,36vw);} .art-note.note-b{left:-5px;} .art-note.note-a{right:-5px;} .calculator-grid{grid-template-columns:1fr 1.05fr;} .calc-card{padding:26px;} .chart-card{padding:27px 15px;} }
+    @media (max-width:800px) { .container{width:min(100% - 36px,690px);} .topbar{height:72px;} .navlinks{display:none;} .header-pill{font-size:9px;} .hero{min-height:unset;} .hero-grid{grid-template-columns:1fr;gap:0;padding-top:45px;min-height:unset;} .hero-copy{padding:0;} .hero h1{font-size:clamp(60px,11vw,94px);margin:24px 0;} .hero-art{height:410px;} .coin-svg{width:300px;max-width:76vw;} .art-note.note-a{top:30px;right:3%;} .art-note.note-b{left:4%;bottom:48px;} .hero-bottom{padding:20px 0;} .stat-strip>div{padding:28px 13px 30px 0;} .stat-strip>div:nth-child(2){padding-left:15px;} .stat-strip>div:last-child{padding-left:15px;} .stat-val{font-size:29px;} .stat-strip p{font-size:11px;} .section{padding-top:95px;} .section-heading{align-items:start;flex-direction:column;gap:18px;} .section-desc{max-width:530px;} .calculator-grid,.sim-grid,.reality-grid{grid-template-columns:1fr;} .chart-card{min-height:420px;padding:27px;} .calc-card{padding:30px;} .sim-visual{min-height:425px;} .math-section{padding:95px 0 65px;} .math-card{grid-template-columns:1fr 1fr;gap:24px;} .math-card>div:first-child{grid-column:1/-1;} }
+    @media (max-width:480px) { .container{width:calc(100% - 30px);} .brand-name{font-size:17px;} .brand-symbol{width:30px;height:30px;} .header-pill{font-size:8px;padding:9px 8px;} .hero-grid{padding-top:37px;} .hero h1{font-size:clamp(56px,15vw,78px);} .hero-copy>p{font-size:14px;} .btn{font-size:12px;padding:14px;} .hero-art{height:350px;} .coin-svg{width:245px;} .art-note{padding:9px 11px;} .art-note strong{font-size:16px;} .art-note small{font-size:8px;} .art-note.note-b{bottom:24px;left:0;} .art-note.note-a{top:19px;right:0;} .hero-bottom p{font-size:9px;} .scroll-prompt{font-size:0;gap:0;} .stat-strip{grid-template-columns:1fr 1fr;} .stat-strip>div{padding:25px 0!important;border-right:0;} .stat-strip>div:nth-child(2){padding-left:12px!important;border-left:1px solid var(--border);} .stat-strip>div:last-child{grid-column:1/-1;border-top:1px solid var(--border);} .stat-val{font-size:30px;} .section{padding-top:80px;} .section h2{font-size:43px;} .pixel-card{padding:13px;} .pixel-card-top{padding:2px 1px 14px;} .pixel-legend{gap:8px;} .pixel-legend span{font-size:8px;} .pixel-stage{min-height:100px;} .pixel-card-bottom{flex-direction:column;align-items:start;} .calc-card{padding:22px;} .big-prob{font-size:60px;} .calc-foot strong{font-size:19px;} .chart-card{padding:25px 14px;min-height:340px;} .chart-top{flex-direction:column;} .chart-top h3{font-size:20px;} .chart-legend{font-size:9px;} .chart-tip{font-size:11px;} .sim-controls{padding:24px;} .sim-visual{min-height:360px;} .chest{width:65%;} .batch-actions{grid-template-columns:1fr 1fr;} .sim-number{font-size:56px;} .reality-card,.playtime-box{padding:27px;} .playtime-box .massive{font-size:68px;} .math-card{grid-template-columns:1fr;} .math-card>div:first-child{grid-column:auto;} .math-formula{font-size:18px;} }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after {animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important;} }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="container">
+      <a class="brand" href="#top" aria-label="Fortnite Token Odds home"><span class="brand-symbol" aria-hidden="true">✦</span><span class="brand-name">TOKEN<em>ODDS.</em></span></a>
+      <nav class="navlinks" aria-label="Sections"><a href="#scale">01 / THE SCALE</a><a href="#calculator">02 / THE MATH</a><a href="#simulator">03 / SIMULATOR</a><a href="#reality">04 / REALITY</a></nav>
+      <div class="header-pill"><i aria-hidden="true"></i> EPIC'S OFFICIAL ODDS</div>
+    </div>
+  </header>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="dot"></span> THE PIRATE TOKEN EXPERIMENT / 2026</div>
+          <h1>GOOD<br>LUCK<br><span class="gradient">WITH THAT.</span></h1>
+          <p>One of Fortnite's most coveted rewards. One absolutely ridiculous drop rate. Here's what <strong>1 in 137,500</strong> actually looks like.</p>
+          <div class="hero-actions"><a class="btn btn-gold" href="#scale">SEE THE ODDS <span aria-hidden="true">↘</span></a><a class="btn btn-ghost" href="#simulator">TRY YOUR LUCK <span aria-hidden="true">↗</span></a></div>
+        </div>
+        <div class="hero-art" aria-label="Illustration of a golden pirate coin">
+          <div class="art-aura"></div><div class="orbit"></div><div class="orbit o2"></div>
+          <div class="spark" style="height:7px;width:7px;top:12%;left:34%;animation-delay:-1s"></div><div class="spark" style="height:4px;width:4px;top:70%;right:16%;animation-delay:-2s"></div><div class="spark" style="height:5px;width:5px;bottom:13%;left:25%;animation-delay:-.5s"></div>
+          <div class="coin-wrap">
+            <svg class="coin-svg" viewBox="0 0 420 420" role="img" aria-label="Original gold pirate compass medallion illustration" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="cg" cx="27%" cy="20%" r="85%"><stop offset="0" stop-color="#fff0b9"/><stop offset=".35" stop-color="#dcb269"/><stop offset=".73" stop-color="#8f602a"/><stop offset="1" stop-color="#69451f"/></radialGradient>
+                <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f6dfa4"/><stop offset=".45" stop-color="#8f5e29"/><stop offset="1" stop-color="#deb577"/></linearGradient>
+                <linearGradient id="inner" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#886132"/><stop offset=".5" stop-color="#cb9e55"/><stop offset="1" stop-color="#9b713c"/></linearGradient>
+                <filter id="emboss"><feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#402509" flood-opacity=".65"/></filter>
+              </defs>
+              <circle cx="210" cy="210" r="196" fill="#533817" stroke="#c6964d" stroke-width="6"/>
+              <circle cx="210" cy="210" r="188" fill="url(#cg)" stroke="url(#edge)" stroke-width="9"/>
+              <circle cx="210" cy="210" r="172" fill="none" stroke="#593c20" stroke-width="3"/>
+              <circle cx="210" cy="210" r="158" fill="url(#inner)" stroke="#f6db92" stroke-opacity=".6" stroke-width="3"/>
+              <circle cx="210" cy="210" r="145" fill="none" stroke="#66431e" stroke-width="1.5" stroke-dasharray="2 9"/>
+              <g fill="#422b15" opacity=".8">
+                <path d="M210 70 224 174 210 154 196 174Z"/><path d="M210 350 224 246 210 266 196 246Z"/>
+                <path d="M70 210 174 196 154 210 174 224Z"/><path d="M350 210 246 196 266 210 246 224Z"/>
+                <path d="M111 111 172 184 151 173 184 172Z"/><path d="M309 309 236 248 247 269 248 236Z"/>
+                <path d="M309 111 236 172 247 151 248 184Z"/><path d="M111 309 172 236 151 247 184 248Z"/>
+              </g>
+              <g stroke="#e7c179" stroke-width="5" stroke-linecap="round" opacity=".8"><path d="M210 88v30M210 302v30M88 210h30M302 210h30"/></g>
+              <g filter="url(#emboss)">
+                <path d="M210 129 230 183 283 210 230 235 210 291 190 235 137 210 190 183Z" fill="#edc982" stroke="#553817" stroke-width="5"/>
+                <path d="M210 154 223 194 266 210 223 225 210 265 197 225 154 210 197 194Z" fill="#a37439" stroke="#ffe7a7" stroke-width="2"/>
+                <circle cx="210" cy="210" r="39" fill="#29251d" stroke="#f0cb81" stroke-width="6"/>
+                <path d="M198 207c-10-19-1-30 12-30s22 11 12 30l-4 10v17h-16v-17Z" fill="#e7c784"/>
+                <circle cx="199" cy="204" r="4" fill="#302a1e"/><circle cx="221" cy="204" r="4" fill="#302a1e"/>
+                <path d="m210 209-4 6h8Z" fill="#302a1e"/>
+                <path d="M202 221v8m5-8v8m6-8v8m5-8v8" stroke="#302a1e" stroke-width="2"/>
+              </g>
+              <circle cx="210" cy="210" r="183" fill="none" stroke="#ffe9af" stroke-opacity=".27" stroke-width="2"/>
+              <text x="210" y="102" fill="#533516" text-anchor="middle" font-size="14" font-family="Georgia,serif" font-weight="bold" letter-spacing="5">FORTUNE</text>
+              <text x="210" y="329" fill="#543517" text-anchor="middle" font-size="14" font-family="Georgia,serif" font-weight="bold" letter-spacing="5">FAVORS NONE</text>
+            </svg>
+          </div>
+          <div class="art-note note-a"><small>DROP CHANCE / CHEST</small><strong>0.000727%</strong></div>
+          <div class="art-note note-b"><small>RARITY CLASS</small><strong>UNREASONABLE</strong></div>
+        </div>
+      </div>
+      <div class="container hero-bottom"><p>THE ODDS ARE REAL. <b>THE ILLUSTRATION ISN'T THE ACTUAL ITEM.</b></p><a href="#scale" class="scroll-prompt">SCROLL TO UNDERSTAND <span aria-hidden="true">↓</span></a></div>
+    </section>
+    <div class="container"><div class="stat-strip">
+      <div><span class="stat-kicker">One chest · chance of success</span><div class="stat-val gold">0.000727%</div><p>That's not even one hundredth of 1%.</p></div>
+      <div><span class="stat-kicker">One chest · chance of failure</span><div class="stat-val red">99.999273%</div><p>Better get used to that number.</p></div>
+      <div><span class="stat-kicker">Average waiting time</span><div class="stat-val">137,500</div><p>Chests per token in an unlimited independent-drop model.</p></div>
+    </div></div>
+    <section class="section container" id="scale">
+      <div class="section-heading"><div><div class="eyebrow"><span class="dot"></span> 01 / THE SCALE</div><h2>Find the <span>one</span><br>gold pixel.</h2></div><p class="section-desc">There are exactly <strong>137,500 pixels</strong> below. Each represents an equally likely outcome. Just one contains the token.</p></div>
+      <div class="pixel-card">
+        <div class="pixel-card-top"><div class="pixel-legend"><span><i class="legend-square"></i> 137,499 NO TOKEN</span><span><i class="legend-square win"></i> 1 PIRATE TOKEN</span></div><div class="pixel-actions"><button class="tiny-btn" id="shufflePixel" type="button">SHUFFLE ↻</button><button class="tiny-btn" id="revealPixel" type="button" aria-pressed="false">REVEAL TOKEN ◎</button></div></div>
+        <div class="pixel-stage"><canvas id="pixelCanvas" width="550" height="250" role="img" aria-label="A grid of 137,500 pixels, 137,499 empty and one representing the Pirate Shop token.">137,500 outcomes. One winning pixel.</canvas><div class="pixel-target" id="pixelTarget" aria-hidden="true"></div></div>
+        <div class="pixel-card-bottom"><p><strong>1 GOLD PIXEL.</strong> THIS IS YOUR CHANCE PER NORMAL CHEST. <br>THE POSITION IS RANDOM; THE PROBABILITY NEVER CHANGES.</p><div class="zoom-preview"><canvas id="zoomCanvas" width="19" height="19" aria-label="Magnified view of the winning pixel"></canvas><span>19 × 19 PIXEL CLOSE-UP<br><b>THE LONELY WINNER ↗</b></span></div></div>
+      </div>
+      <p class="annotation">Visualization is a literal 550 × 250 grid: 137,500 equally likely outcomes. The token pixel's position is illustrative, not an in-game mechanic.</p>
+    </section>
+    <section class="section container" id="calculator">
+      <div class="section-heading"><div><div class="eyebrow"><span class="dot"></span> 02 / THE PROBABILITY</div><h2>Surely the next<br>one is <span>it.</span> Right?</h2></div><p class="section-desc">Keep opening chests. Your cumulative chance grows, but the next chest still has exactly the same tiny odds.</p></div>
+      <div class="calculator-grid">
+        <div class="card calc-card">
+          <div class="card-kicker">Choose your odds</div>
+          <div class="segmented" role="group" aria-label="Drop rate"><button type="button" data-rate="1" class="selected" aria-pressed="true">NORMAL · 1×</button><button type="button" data-rate="1.5" aria-pressed="false">TREASURE HOUR · 1.5×</button></div>
+          <div class="card-kicker">Chance to find at least one token</div><div class="big-prob" id="chanceValue" aria-live="polite">0.725%</div><div class="prob-label">after <b id="chanceChestLabel">1,000</b> independent chest attempts</div>
+          <div class="meter"><div id="chanceMeter"></div></div><div class="meter-caption"><span>0% · IMPOSSIBLE</span><span><em id="failureChance">99.275%</em> CHANCE OF NOTHING</span></div>
+          <div class="slider-block"><div class="slider-head"><label for="chestSlider">NUMBER OF CHESTS</label><strong id="chestNumber">1,000</strong></div><input type="range" class="range" id="chestSlider" min="0" max="1000" value="443" aria-valuetext="1,000 chests"></div>
+          <div class="presets"><button class="preset" type="button" data-chests="150">3 HOURS*</button><button class="preset" type="button" data-chests="1000">1K</button><button class="preset" type="button" data-chests="10000">10K</button><button class="preset" type="button" data-chests="95309">~50%</button><button class="preset" type="button" data-chests="137500">137.5K</button></div>
+          <div class="calc-foot"><div><span>50% CHANCE NEEDS</span><strong id="fiftyChests">95,309</strong></div><div><span>90% CHANCE NEEDS</span><strong id="ninetyChests">316,604</strong></div></div>
+          <div class="annotation">*3 hours assumes 50 eligible chests/hour. No playtime guarantee exists.</div>
+        </div>
+        <div class="card chart-card"><div class="chart-top"><div><div class="card-kicker">Probability curve</div><h3>A very, very long climb.</h3></div><div class="chart-legend"><span><i class="muted-line"></i> NORMAL</span><span><i></i> SELECTED RATE</span></div></div>
+          <div class="chart-area"><svg id="curveChart" viewBox="0 0 720 360" role="img" aria-label="Chart showing the probability of obtaining at least one Pirate Token increasing with chest openings, approaching 100 percent but never reaching it exactly.">
+            <defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#e4bf78" stop-opacity=".17"/><stop offset="1" stop-color="#e4bf78" stop-opacity="0"/></linearGradient></defs>
+            <g id="chartGrid"></g><path id="normalCurve" fill="none" stroke="#6d7f81" stroke-width="2" stroke-dasharray="5 6"/><path id="selectedArea" fill="url(#chartFill)"/><path id="selectedCurve" stroke="#e9c379" stroke-width="3" fill="none" stroke-linecap="round"/><line id="chartMarker" x1="0" x2="0" y1="27" y2="310" stroke="#f3d48f" stroke-width="1" stroke-dasharray="5 5"/><circle id="chartPoint" r="6" fill="#f6d99c" stroke="#3c3522" stroke-width="3"/><g id="chartAxis"></g>
+          </svg></div>
+          <div class="chart-tip"><span class="tip-star">✳</span><div><strong style="color:#dfe5dc;font-weight:500">The gambler's fallacy:</strong> after 10,000 failures, your 10,001st normal chest still has a 1 in 137,500 chance. The game doesn't owe you a token.</div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section container" id="simulator">
+      <div class="section-heading"><div><div class="eyebrow"><span class="dot"></span> 03 / THE EXPERIMENT</div><h2>Open chests.<br><span>Feel nothing.</span></h2></div><p class="section-desc">A real random simulation using the official probabilities. Click through thousands of chests and see how absurdly uneventful it usually is.</p></div>
+      <div class="sim-grid">
+        <div class="card sim-visual"><div class="sim-top card-kicker">CHEST DROP SIMULATOR // <span id="simRateLabel">NORMAL RATE</span></div><div class="gold-flash" id="goldFlash"></div><div class="confetti" id="confetti"></div>
+          <div class="chest" id="chestArtwork"><svg class="chest-svg" viewBox="0 0 380 310" role="img" aria-label="Illustrated pirate treasure chest" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="wood" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#966337"/><stop offset=".45" stop-color="#4b2e1d"/><stop offset="1" stop-color="#251b14"/></linearGradient><linearGradient id="woodtop" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ba864c"/><stop offset="1" stop-color="#50301d"/></linearGradient><linearGradient id="chGold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f9dda1"/><stop offset=".4" stop-color="#c6944d"/><stop offset="1" stop-color="#725028"/></linearGradient></defs>
+            <ellipse cx="190" cy="283" rx="141" ry="17" fill="#0008"/>
+            <path d="M45 134Q53 54 123 51H258Q329 55 336 134L327 168H52Z" fill="#281b15" stroke="#d3a666" stroke-width="6"/>
+            <path d="M54 128Q63 66 129 64H250Q313 69 324 128Z" fill="url(#woodtop)" stroke="#47301e" stroke-width="4"/>
+            <path d="M100 64 93 142M280 64 288 142" stroke="#d3ab68" stroke-width="23" stroke-linejoin="round"/><path d="M100 64 93 142M280 64 288 142" stroke="#6e4a27" stroke-width="9"/>
+            <path d="M45 131H337L321 273H58Z" fill="url(#wood)" stroke="#2b1b13" stroke-width="6"/>
+            <path d="M61 171H321M61 220H321" stroke="#bd854b" stroke-opacity=".55" stroke-width="6"/>
+            <path d="M57 147H328" stroke="#e2b86e" stroke-width="30"/><path d="M55 148H331" stroke="#49311d" stroke-width="8"/>
+            <path d="M73 153 84 270M301 153 291 270" stroke="#dfb26e" stroke-width="26"/><path d="M73 153 84 270M301 153 291 270" stroke="#8b5a32" stroke-width="9"/>
+            <path d="M159 146H222V208Q190 237 159 208Z" fill="url(#chGold)" stroke="#65421e" stroke-width="5"/>
+            <circle cx="190" cy="173" r="13" fill="#2c2117"/><path d="M186 177 180 198H200L194 177Z" fill="#2c2117"/>
+            <g fill="#f4cc84"><circle cx="58" cy="151" r="4"/><circle cx="324" cy="151" r="4"/><circle cx="82" cy="253" r="4"/><circle cx="299" cy="253" r="4"/></g>
+            <path d="M74 270 57 281H103L97 269M280 269 275 281H323L304 270" fill="#7c542f"/>
+          </svg></div>
+          <div class="sim-under"><span id="chestResultEyebrow">LATEST DROP</span><strong id="chestResult">NOTHING. AGAIN.</strong></div>
+        </div>
+        <div class="card sim-controls"><div class="card-kicker">THIS IS A SIMULATION. NOT YOUR ACCOUNT.</div><h3>How lucky are you?</h3><p>Every chest has a new independent chance. The experiment stops after your first token, matching the one-time treasure reward.</p>
+          <div class="sim-number" id="simOpened">0</div><div class="sim-caption">CHESTS OPENED THIS RUN</div>
+          <div class="sim-tiles"><div class="sim-tile"><small>TOKEN FOUND</small><strong id="simTokenCount">NO</strong></div><div class="sim-tile"><small>ODDS YOU'D HAVE ONE BY NOW</small><strong id="simExpected">0.00%</strong></div></div>
+          <div class="batch-actions"><button type="button" data-batch="1">+1</button><button type="button" data-batch="100">+100</button><button type="button" data-batch="1000">+1,000</button><button type="button" data-batch="10000">+10,000</button></div>
+          <div class="sim-status"><span id="simMessage" role="status" aria-live="polite">Go on. Open a chest.</span><button class="reset" type="button" id="resetSim">↻ NEW RUN</button></div>
+        </div>
+      </div>
+    </section>
+    <section class="section container" id="reality">
+      <div class="section-heading"><div><div class="eyebrow"><span class="dot"></span> 04 / REALITY CHECK</div><h2>Three hours.<br><span>One big nothing.</span></h2></div><p class="section-desc">That viral three-hour claim isn't a guaranteed unlock. See what three hours of ordinary chest hunting would actually get you statistically.</p></div>
+      <div class="reality-grid">
+        <div class="card reality-card"><div class="card-kicker">Your hypothetical grind</div><h3>Let's say you play<br>for three hours.</h3><p>How many eligible chests can you reasonably open per hour? Choose your own rate. This isn't a Fortnite stat, just a way to estimate your odds.</p>
+          <div class="hours-slider"><div class="slider-head"><label for="speedSlider">CHESTS PER HOUR</label><strong id="speedValue">50</strong></div><input type="range" class="range" id="speedSlider" min="10" max="300" step="5" value="50"></div>
+          <div class="calc-foot"><div><span>TOTAL CHESTS / 3H</span><strong id="threeHourChests">150</strong></div><div><span>CHANCE OF THE TOKEN</span><strong id="threeHourChance">0.109%</strong></div></div>
+          <p style="font:10px var(--mono);color:#6f8079;margin-top:20px">USES THE SAME DROP-RATE SETTING AS THE CALCULATOR ABOVE.</p>
+        </div>
+        <div class="playtime-box"><div class="card-kicker">What's most likely to happen</div><div><div class="massive" id="nothingChance">99.891%</div><div class="massive-label">CHANCE YOU WALK AWAY EMPTY-HANDED</div><div class="micro-bar"><div id="playtimeSuccessBar"></div></div><div class="bottom-line">At this pace, finding the token is roughly <b id="oneInRuns">1 in 917</b> three-hour sessions. That's a probability, not a countdown or guarantee.</div></div></div>
+      </div>
+    </section>
+    <section class="math-section container"><div class="math-card"><div><div class="eyebrow"><span class="dot"></span> THE LOGIC</div><h3>No tricks.<br>Just probability.</h3></div><div><div class="card-kicker">Chance of at least one success</div><div class="math-formula">P = 1 − (1 − p)<sup>n</sup></div><p>p = chance per chest · n = number of chests. Assumes independent attempts with the same active drop rate.</p></div><div><div class="card-kicker">The important distinction</div><p><strong style="color:#dfddd1">Average ≠ guaranteed.</strong> Even after 137,500 normal chests, you still have about a 36.8% chance of having found nothing.</p></div></div></section>
+  </main>
+  <footer><div class="container"><p>FORTNITE TOKEN ODDS. AN UNOFFICIAL STATISTICAL EXPERIMENT.<br>NOT AFFILIATED WITH OR ENDORSED BY EPIC GAMES. NO REAL ITEMS ARE AWARDED.</p><p>DROP RATES: <a href="https://www.epicgames.com/help/c-34254770/c-33726977/what-are-the-drop-rates-of-treasure-in-chests-in-fortnite-battle-royale-s-pirate-treasure-event-a14361627" target="_blank" rel="noopener noreferrer">EPIC GAMES SUPPORT ↗</a><br>BUILT TO MAKE A TINY NUMBER FEEL REAL.</p></div></footer>
+  <script>
+    'use strict';
+    const BASE = 137500;
+    const $ = id => document.getElementById(id);
+    const fmt = n => Math.round(n).toLocaleString('en-US');
+    const prob = (n, boost=1) => -Math.expm1(n * Math.log1p(-boost / BASE));
+    const percent = (p, digits=3) => `${(100*p).toFixed(digits)}%`;
+    const threshold = (target, boost) => Math.ceil(Math.log1p(-target) / Math.log1p(-boost / BASE));
+    let boost = 1;
+
+    // Exact outcome-map size: 550 columns * 250 rows = 137,500 pixels.
+    const W = 550, H = 250, pix = $('pixelCanvas'), ctx = pix.getContext('2d', {willReadFrequently:false});
+    let winningPixel = 92763, reveal = false;
+    function drawPixels() {
+      if (!ctx) return;
+      const data = ctx.createImageData(W,H);
+      for (let i=0; i<W*H; i++) {
+        const n = (i*1664525 + (i>>>5)*1013904223) >>> 0;
+        const d = (n % 16);
+        let r=28+d, g=43+d, b=46+d;
+        if(i === winningPixel) { r=255;g=215;b=115; }
+        const x=i*4; data.data[x]=r;data.data[x+1]=g;data.data[x+2]=b;data.data[x+3]=255;
+      }
+      ctx.putImageData(data,0,0);
+      const tx=winningPixel%W, ty=Math.floor(winningPixel/W);
+      const target=$('pixelTarget'); target.style.left = `${((tx+.5)/W)*100}%`;target.style.top=`${((ty+.5)/H)*100}%`;
+      const z=$('zoomCanvas').getContext('2d');
+      if (z){z.imageSmoothingEnabled=false;z.clearRect(0,0,19,19);for(let yy=-9;yy<=9;yy++){for(let xx=-9;xx<=9;xx++){z.fillStyle=xx===0&&yy===0?'#ffd777':'#2e3f43';z.fillRect(xx+9,yy+9,1,1);}}}
+    }
+    $('shufflePixel').addEventListener('click',()=>{winningPixel=Math.floor(Math.random()*W*H);reveal=false;$('revealPixel').setAttribute('aria-pressed','false');$('revealPixel').classList.remove('active');$('revealPixel').textContent='REVEAL TOKEN ◎';$('pixelTarget').classList.remove('visible');drawPixels();});
+    $('revealPixel').addEventListener('click',()=>{reveal=!reveal;$('pixelTarget').classList.toggle('visible',reveal);$('revealPixel').classList.toggle('active',reveal);$('revealPixel').setAttribute('aria-pressed',String(reveal));$('revealPixel').textContent=reveal?'HIDE TOKEN ⊗':'REVEAL TOKEN ◎';});
+    drawPixels();
+
+    // Interactive probability calculator: logarithmic range for fine detail at small counts.
+    const slider=$('chestSlider'), MIN=1, MAX=500000;
+    const toRange = n => Math.round(1000*Math.log(n/MIN)/Math.log(MAX/MIN));
+    const fromRange = v => Math.max(1,Math.round(MIN*Math.exp(Math.log(MAX/MIN)*v/1000)));
+    let count=1000;
+    function setSliderN(n){ count=Math.max(MIN,Math.min(MAX,n)); slider.value=toRange(count);renderCalculator(); }
+    slider.addEventListener('input',()=>{count=fromRange(Number(slider.value));renderCalculator();});
+    document.querySelectorAll('[data-chests]').forEach(b=>b.addEventListener('click',()=>setSliderN(Number(b.dataset.chests))));
+    document.querySelectorAll('[data-rate]').forEach(b=>b.addEventListener('click',()=>{
+      boost=Number(b.dataset.rate);
+      document.querySelectorAll('[data-rate]').forEach(x=>{const active=Number(x.dataset.rate)===boost;x.classList.toggle('selected',active);x.setAttribute('aria-pressed',String(active));});
+      // New simulation for this probability model, so old results can't silently change odds.
+      resetSimulation(); renderCalculator(); renderReality();
+      $('simRateLabel').textContent=boost===1?'NORMAL RATE':'TREASURE HOUR ×1.5';
+    }));
+    function renderCalculator(){const chance=prob(count,boost),fail=1-chance;
+      $('chestNumber').textContent=fmt(count);$('chestNumber').setAttribute('aria-label',`${fmt(count)} chests`);
+      $('chanceChestLabel').textContent=fmt(count);$('chanceValue').textContent=percent(chance, chance<.001?4:3);
+      $('chanceMeter').style.width=`${100*chance}%`;$('failureChance').textContent=percent(fail,3);
+      $('fiftyChests').textContent=fmt(threshold(.5,boost));$('ninetyChests').textContent=fmt(threshold(.9,boost));
+      slider.style.setProperty('--progress',`${100*Number(slider.value)/1000}%`);slider.setAttribute('aria-valuetext',`${fmt(count)} chests`);
+      drawChart();
+    }
+    // SVG graph generated from the actual closed-form survival function.
+    const NS='http://www.w3.org/2000/svg', cx0=58, cx1=692, cy0=27, cy1=310, CMAX=500000;
+    const graphX=n=>cx0+(cx1-cx0)*(n/CMAX), graphY=p=>cy1-(cy1-cy0)*p;
+    function chartPath(rate){let out='';for(let i=0;i<=160;i++){const n=CMAX*i/160, x=graphX(n), y=graphY(prob(n,rate));out+=`${i?'L':'M'}${x.toFixed(2)},${y.toFixed(2)} `;}return out.trim();}
+    function addSvg(tag,attrs,parent,text){const node=document.createElementNS(NS,tag);for(const k in attrs)node.setAttribute(k,attrs[k]);if(text!==undefined)node.textContent=text;parent.appendChild(node);return node;}
+    function drawChart(){const grid=$('chartGrid'),axis=$('chartAxis');grid.replaceChildren();axis.replaceChildren();
+      for(const p of [0,.25,.5,.75,1]){const y=graphY(p);addSvg('line',{class:'chart-grid',x1:cx0,y1:y,x2:cx1,y2:y},grid);addSvg('text',{class:'chart-axis',x:cx0-12,y:y+4,'text-anchor':'end'},axis,`${p*100}%`);}
+      for(const n of [0,100000,200000,300000,400000,500000]){const x=graphX(n);addSvg('text',{class:'chart-axis',x,y:339,'text-anchor':'middle'},axis,n===0?'0':`${n/1000}K`);}
+      const path=chartPath(boost);$('normalCurve').setAttribute('d',chartPath(1));$('selectedCurve').setAttribute('d',path);
+      $('selectedArea').setAttribute('d',path+` L${cx1},${cy1} L${cx0},${cy1} Z`);
+      const mx=graphX(count),my=graphY(prob(count,boost));$('chartMarker').setAttribute('x1',mx);$('chartMarker').setAttribute('x2',mx);$('chartPoint').setAttribute('cx',mx);$('chartPoint').setAttribute('cy',my);
+    }
+    setSliderN(1000);
+
+    // Geometric waiting time gives the exact first-success distribution without thousands of loops.
+    function sampleFirstSuccess() {
+      const u=typeof crypto!=='undefined' && crypto.getRandomValues ? crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296 : Math.random();
+      return Math.floor(Math.log1p(-Math.min(u,1-Number.EPSILON))/Math.log1p(-boost/BASE))+1;
+    }
+    let simTotal=0,simSuccess=false,simTarget=sampleFirstSuccess(),simBusy=false;
+    let chestTimeout=null;
+    function resetSimulation(){if(chestTimeout){clearTimeout(chestTimeout);chestTimeout=null;}simTotal=0;simSuccess=false;simBusy=false;simTarget=sampleFirstSuccess();$('chestArtwork').classList.remove('hop','won');$('goldFlash').classList.remove('visible');$('confetti').replaceChildren();$('chestResultEyebrow').textContent='LATEST DROP';$('chestResult').textContent='NOTHING. AGAIN.';$('simMessage').textContent='Go on. Open a chest.';renderSim();}
+    function renderSim(){ $('simOpened').textContent=fmt(simTotal);$('simTokenCount').textContent=simSuccess?'YES ✦':'NO';$('simTokenCount').style.color=simSuccess?'#edc976':'#f3f0e7';$('simExpected').textContent=percent(prob(simTotal,boost),2);document.querySelectorAll('[data-batch]').forEach(b=>b.disabled=simBusy||simSuccess); }
+    function confetti(){const root=$('confetti');root.replaceChildren();for(let i=0;i<46;i++){const el=document.createElement('i');el.style.left=`${Math.random()*100}%`;el.style.animationDelay=`${Math.random()*.5}s`;el.style.setProperty('--dx',`${Math.random()*170-85}px`);el.style.setProperty('--rot',`${Math.random()*900-450}deg`);el.style.background=i%3===0?'#a5e8c3':i%3===1?'#edc976':'#fff2d0';root.appendChild(el);} }
+    function openBatch(n){if(simSuccess||simBusy)return;simBusy=true;renderSim();$('chestArtwork').classList.remove('hop');void $('chestArtwork').offsetWidth;$('chestArtwork').classList.add('hop');$('chestResultEyebrow').textContent='OPENING CHESTS';$('chestResult').textContent='ROLLING THE ODDS…';
+      chestTimeout=setTimeout(()=>{const before=simTotal;simTotal+=n;simSuccess=simTotal>=simTarget;if(simSuccess){const at=simTarget;simTotal=at; $('chestArtwork').classList.remove('hop');$('chestArtwork').classList.add('won');$('goldFlash').classList.add('visible');$('chestResultEyebrow').textContent='IMPOSSIBLE? APPARENTLY NOT.';$('chestResult').textContent='PIRATE SHOP ACCESS ✦';$('simMessage').textContent=`You won on chest #${fmt(at)}. Try a new run!`;confetti();}
+      else {$('chestResultEyebrow').textContent='LATEST DROP';$('chestResult').textContent='NOTHING. AGAIN.';$('simMessage').textContent=`${fmt(n)} more chests. Zero tokens. Just like most runs.`;}
+      simBusy=false;chestTimeout=null;renderSim();},n===1?420:570);
+    }
+    document.querySelectorAll('[data-batch]').forEach(b=>b.addEventListener('click',()=>openBatch(Number(b.dataset.batch))));
+    $('resetSim').addEventListener('click',resetSimulation); renderSim();
+
+    const speed=$('speedSlider');
+    function renderReality(){const perHour=Number(speed.value),three=perHour*3,chance=prob(three,boost);$('speedValue').textContent=fmt(perHour);$('threeHourChests').textContent=fmt(three);$('threeHourChance').textContent=percent(chance,3);$('nothingChance').textContent=percent(1-chance,3);$('playtimeSuccessBar').style.width=`${100*chance}%`;$('oneInRuns').textContent=`1 in ${fmt(1/chance)}`;speed.style.setProperty('--progress',`${(perHour-10)/290*100}%`);}
+    speed.addEventListener('input',renderReality);renderReality();
+  </script>
+</body>
+</html>
